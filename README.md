@@ -26,6 +26,8 @@ docker run -dti -p 8118:8118 \
 
 # docker compose
 ```
+version: '3'
+services:
   v2fly:
     container_name:  v2fly
     hostname: v2fly
