@@ -11,7 +11,8 @@ RUN apk --no-cache add privoxy
 COPY --from=build /gfwlist.action /etc/privoxy/
 RUN echo 'actionsfile gfwlist.action' >> /etc/privoxy/config \
  && sed -i '/listen-address/d' /etc/privoxy/config \
- && echo 'listen-address 0.0.0.0:8118' >> /etc/privoxy/config
+ && echo 'listen-address 0.0.0.0:8118' >> /etc/privoxy/config \
+ && cp /etc/privoxy/default.filter.new /etc/privoxy/default.filter
 
 COPY entrypoint.sh /entrypoint.sh
 
