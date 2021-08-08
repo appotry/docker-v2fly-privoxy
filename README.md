@@ -48,7 +48,8 @@ services:
     restart: always
 ```
 
-v2ray config中部分配置，和上面compose 文件对应端口
+v2ray config中部分配置，和上面compose 文件对应端口。
+socket代理v2ray默认1080， 这里改为1088，和privoxy的gfwlist.action里面设置的端口要一致。
 ```
     {
       "tag": "socks",
