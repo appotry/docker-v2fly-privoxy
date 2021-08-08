@@ -4,7 +4,7 @@ RUN echo 'https://mirrors.tuna.tsinghua.edu.cn/alpine/latest-stable/main' > /etc
  && echo 'https://mirrors.tuna.tsinghua.edu.cn/alpine/latest-stable/community' >> /etc/apk/repositories \
  && apk add bash ca-certificates curl perl \
  && curl -4sSkLO https://raw.github.com/zfl9/gfwlist2privoxy/master/gfwlist2privoxy \
- && bash gfwlist2privoxy 127.0.0.1:1080
+ && bash gfwlist2privoxy 127.0.0.1:1088
 
 FROM v2fly/v2fly-core
 RUN apk --no-cache add privoxy
