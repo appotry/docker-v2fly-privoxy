@@ -7,7 +7,9 @@ RUN echo 'https://mirrors.tuna.tsinghua.edu.cn/alpine/latest-stable/main' > /etc
  && bash gfwlist2privoxy 127.0.0.1:1088
 
 FROM v2fly/v2fly-core
-RUN apk --no-cache add privoxy
+RUN echo 'https://mirrors.tuna.tsinghua.edu.cn/alpine/latest-stable/main' > /etc/apk/repositories && \
+  echo 'https://mirrors.tuna.tsinghua.edu.cn/alpine/latest-stable/community' >> /etc/apk/repositories && \
+  apk --no-cache add privoxy
 COPY --from=build /gfwlist.action /etc/privoxy/
 RUN echo 'actionsfile gfwlist.action' >> /etc/privoxy/config \
  && sed -i '/listen-address/d' /etc/privoxy/config \
