@@ -5,6 +5,8 @@ Docker版 v2ray 客户端,v2ray 结合 privoxy 来使用 gfwlist 规则来实现
 > DockerHub: https://hub.docker.com/r/bloodstar/v2fly-privoxy
 > 
 > Github: https://github.com/appotry/docker-v2fly-privoxy
+>
+> 个人博客：<a title="My Blog Site" target="_blank" href="https://blog.17lai.site/"><img src="https://img.shields.io/badge/%E5%A4%9C%E6%B3%95%E4%B9%8B%E4%B9%A6%E5%8D%9A%E5%AE%A2%20(blog)-blog.17lai.site-orange" /></a>
 
 ## 运行
 ```shell
