@@ -21,7 +21,6 @@
 
 ### 第一阶段（alpine）
 
-- 安装 glibc（v2ray 运行时依赖）
 - 安装 bash、ca-certificates、curl、perl
 - 通过 `gfwlist2privoxy` 生成 `gfwlist.action`，目标地址 `127.0.0.1:1088`
 

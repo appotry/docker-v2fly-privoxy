@@ -34,7 +34,6 @@
 - v2ray 配置文件必须挂载到 `/etc/v2ray/config.json`
 - 自定义 privoxy 配置可挂载到 `/etc/privoxy/config`
 - 构建时 privoxy 被设为 `listen-address 0.0.0.0:8118`，追加 `gfwlist.action`
-- Alpine 中安装了 glibc（v2ray 依赖）
 
 
 ## CI / Docker
