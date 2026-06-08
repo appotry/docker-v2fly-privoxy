@@ -5,50 +5,46 @@ on:
     branches:
       - main
       - master
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    # UTC 17:00 -> CST (China) 1:00, see https://datetime360.com/cn/utc-cst-china-time/
-    # - cron: '0 17 * * *'
-    # 每月最后一天10:15分运行
-    # - cron: '0 15 10 L * ?'
-    # 每月第一天0:0分运行
-    - cron: '0 0 1 * *'
   workflow_dispatch:
 
+env:
+  IMAGE: bloodstar/v2fly-privoxy
+
 jobs:
-  buildx:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      # Docker Image 构建环境
+      - name: Read v2fly-core version from Dockerfile
+        id: version
+        run: |
+          VERSION=$(grep -oP '(?<=^FROM v2fly/v2fly-core:)\S+' Dockerfile)
+          echo "core_version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Target version: $VERSION"
+
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # ReleaseTag
-      - name: Set Version
-        id: set-version
-        run: |
-          echo "version=`date +'%y-%m-%d'`" >> $GITHUB_ENV
-          
-      # Build and push
-      - name: Build dockerfile
-        uses: docker/build-push-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v6
         with:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true
           tags: |
-            bloodstar/v2fly-privoxy:stable-${{ env.version }}
-            bloodstar/v2fly-privoxy:latest
+            ${{ env.IMAGE }}:${{ steps.version.outputs.core_version }}
+            ${{ env.IMAGE }}:latest
 
+      - name: Write version info
+        run: |
+          echo "BUILT_VERSION=${{ steps.version.outputs.core_version }}" >> "$GITHUB_STEP_SUMMARY"

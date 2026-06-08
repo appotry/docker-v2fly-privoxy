@@ -39,7 +39,7 @@ RUN echo 'https://mirrors.tuna.tsinghua.edu.cn/alpine/latest-stable/main' > /etc
     && curl -4sSkLO https://raw.github.com/zfl9/gfwlist2privoxy/master/gfwlist2privoxy \
     && bash gfwlist2privoxy 127.0.0.1:1088
 
-FROM v2fly/v2fly-core
+FROM v2fly/v2fly-core:v5.41.0
 RUN echo 'https://mirrors.tuna.tsinghua.edu.cn/alpine/latest-stable/main' > /etc/apk/repositories && \
     echo 'https://mirrors.tuna.tsinghua.edu.cn/alpine/latest-stable/community' >> /etc/apk/repositories && \
     apk --no-cache add privoxy
