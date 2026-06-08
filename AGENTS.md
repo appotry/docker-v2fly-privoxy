@@ -7,7 +7,7 @@
 | 命令 | 作用 |
 |------|------|
 | `docker build -t bloodstar/v2fly-privoxy:latest .` | 单架构本地构建 |
-| `docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64 -t bloodstar/v2fly-privoxy:latest .` | 多架构构建 |
+| `docker buildx build --platform linux/amd64,linux/386,linux/arm/v6,linux/arm/v7,linux/arm64 -t bloodstar/v2fly-privoxy:latest .` | 多架构构建 |
 | `docker run -dti -p 8118:8118 -v /path/to/config.json:/etc/v2ray/config.json bloodstar/v2fly-privoxy` | 运行（挂载 v2ray 配置） |
 
 ## 项目结构
