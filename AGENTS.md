@@ -41,7 +41,7 @@
 - **On push** 到 `main`/`master` — 始终构建（捕获 Dockerfile 变更）
 - **每日 06:00 UTC** — 自动构建（确保最新 gfwlist）
 - **手动触发** — 同上
-- Tag 格式：`<v2fly-core-version>` + `latest`（例如 `bloodstar/v2fly-privoxy:v5.41.0`）
+- Tag 格式：`<v2fly-core-version>-<构建日期>` + `latest`（例如 `bloodstar/v2fly-privoxy:v5.41.0-2026-06-08`）
 - 版本由工作流自动检测：查询 Docker Hub API 获取 `v2fly/v2fly-core` 最新 semver 标签
 
 ## 工程化约定

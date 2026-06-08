@@ -31,7 +31,9 @@ semver = sorted([t for t in tags if t.lstrip('v').replace('.','').isdigit()],
   key=lambda x: [int(p) for p in x.lstrip('v').split('.')])
 print(semver[-1] if semver else '')
 ")
+          DATE=$(date +'%Y-%m-%d')
           echo "core_version=$LATEST" >> "$GITHUB_OUTPUT"
+          echo "build_date=$DATE" >> "$GITHUB_OUTPUT"
           echo "Detected v2fly-core: $LATEST"
 
       - name: Set up QEMU
@@ -53,9 +55,9 @@ print(semver[-1] if semver else '')
           platforms: linux/amd64,linux/386,linux/arm/v6,linux/arm/v7,linux/arm64
           push: true
           tags: |
-            ${{ env.IMAGE }}:${{ steps.version.outputs.core_version }}
+            ${{ env.IMAGE }}:${{ steps.version.outputs.core_version }}-${{ steps.version.outputs.build_date }}
             ${{ env.IMAGE }}:latest
 
       - name: Write version info
         run: |
-          echo "BUILT_VERSION=${{ steps.version.outputs.core_version }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "BUILT_TAG=${{ steps.version.outputs.core_version }}-${{ steps.version.outputs.build_date }}" >> "$GITHUB_STEP_SUMMARY"
