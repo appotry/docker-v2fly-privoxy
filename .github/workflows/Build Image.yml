@@ -23,14 +23,7 @@ jobs:
         id: version
         run: |
           RESP=$(curl -s "https://hub.docker.com/v2/repositories/v2fly/v2fly-core/tags?page_size=100")
-          LATEST=$(echo "$RESP" | python3 -c "
-import json,sys
-data = json.load(sys.stdin)
-tags = [r['name'] for r in data.get('results', []) if r['name'] != 'latest']
-semver = sorted([t for t in tags if t.lstrip('v').replace('.','').isdigit()],
-  key=lambda x: [int(p) for p in x.lstrip('v').split('.')])
-print(semver[-1] if semver else '')
-")
+          LATEST=$(echo "$RESP" | python3 -c "import json,sys;d=json.load(sys.stdin);t=[r['name'] for r in d['results'] if r['name']!='latest'];s=sorted([x for x in t if x.lstrip('v').replace('.','').isdigit()],key=lambda v:[int(p) for p in v.lstrip('v').split('.')]);print(s[-1] if s else '')")
           DATE=$(date +'%Y-%m-%d')
           echo "core_version=$LATEST" >> "$GITHUB_OUTPUT"
           echo "build_date=$DATE" >> "$GITHUB_OUTPUT"
