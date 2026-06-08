@@ -35,7 +35,7 @@
 - 自定义 privoxy 配置可挂载到 `/etc/privoxy/config`
 - 构建时 privoxy 被设为 `listen-address 0.0.0.0:8118`，追加 `gfwlist.action`
 - Alpine 中安装了 glibc（v2ray 依赖）
-- apk 源使用清华大学 TUNA 镜像（中国友好构建）
+
 
 ## CI / Docker
 

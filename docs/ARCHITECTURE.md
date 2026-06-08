@@ -27,7 +27,6 @@
 
 ### 第二阶段（v2fly/v2fly-core）
 
-- 使用清华大学 TUNA 镜像源（中国友好构建）
 - 安装 privoxy
 - 从第一阶段复制 gfwlist.action
 - 修改 privoxy 配置：设置 `listen-address 0.0.0.0:8118`，追加 `actionsfile gfwlist.action`
