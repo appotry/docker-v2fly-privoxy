@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - master
+  schedule:
+    - cron: '0 6 * * *'
   workflow_dispatch:
 
 env:
@@ -17,12 +19,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Read v2fly-core version from Dockerfile
+      - name: Get latest v2fly-core version
         id: version
         run: |
-          VERSION=$(grep -oP '(?<=^FROM v2fly/v2fly-core:)\S+' Dockerfile)
-          echo "core_version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "Target version: $VERSION"
+          RESP=$(curl -s "https://hub.docker.com/v2/repositories/v2fly/v2fly-core/tags?page_size=100")
+          LATEST=$(echo "$RESP" | python3 -c "
+import json,sys
+data = json.load(sys.stdin)
+tags = [r['name'] for r in data.get('results', []) if r['name'] != 'latest']
+semver = sorted([t for t in tags if t.lstrip('v').replace('.','').isdigit()],
+  key=lambda x: [int(p) for p in x.lstrip('v').split('.')])
+print(semver[-1] if semver else '')
+")
+          echo "core_version=$LATEST" >> "$GITHUB_OUTPUT"
+          echo "Detected v2fly-core: $LATEST"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3

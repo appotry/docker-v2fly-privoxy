@@ -23,8 +23,7 @@
 │   ├── STRUCTURE.md     # 项目文件清单
 │   └── ARCHITECTURE.md  # 架构说明、构建流水线、数据流
 └── .github/
-    ├── dependabot.yml   # Dependabot Docker 依赖更新
-    └── workflows/
+└── workflows/
         └── Build Image.yml  # GitHub Actions：版本检测 → 构建 → 推送
 ```
 
@@ -40,10 +39,10 @@
 
 `.github/workflows/Build Image.yml`：
 - **On push** 到 `main`/`master` — 始终构建（捕获 Dockerfile 变更）
+- **每日 06:00 UTC** — 自动构建（确保最新 gfwlist）
 - **手动触发** — 同上
 - Tag 格式：`<v2fly-core-version>` + `latest`（例如 `bloodstar/v2fly-privoxy:v5.41.0`）
-
-版本检测由 Dependabot（`.github/dependabot.yml`）每日自动完成。当 `v2fly/v2fly-core` 发布新版时，Dependabot 提 PR 更新 `Dockerfile` 中的版本号，PR 合并后触发构建。
+- 版本由工作流自动检测：查询 Docker Hub API 获取 `v2fly/v2fly-core` 最新 semver 标签
 
 ## 工程化约定
 
